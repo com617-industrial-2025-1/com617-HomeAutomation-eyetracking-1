@@ -3,6 +3,7 @@ camera:
 
 openhab:
   base_url: "http://localhost:8080"
+  api_token: "oh.eyetracker.XfYBsVuX0LJ99ZMO9i5PdZCXdd7TBDXDnewgWjFU1R8QxBKEQQjeBrKf9NoUuw45EyxsnF701taK46uhALaw"
 
 velbus:
   enabled: false
@@ -19,7 +20,7 @@ ai:
   model: "gemini-2.0-flash"
 
 interaction:
-  dwell_time_seconds: 2.0
+  dwell_time_seconds: 3.0
   blink_threshold: 0.2
   long_blink_seconds: 0.5
   nod_threshold: 15
@@ -28,22 +29,22 @@ interaction:
 
 zones:
   - name: "Light"
-    icon: "💡"
+    icon: "[LIGHT]"
     region: [0.0, 0.0, 0.5, 0.5]
     item: "LivingRoom_Light"
     command: "TOGGLE"
   - name: "Blinds"
-    icon: "🪟"
+    icon: "[BLINDS]"
     region: [0.5, 0.0, 1.0, 0.5]
     item: "Bedroom_Blinds"
     command: "UP"
   - name: "Bedtime"
-    icon: "🌙"
+    icon: "[SLEEP]"
     region: [0.0, 0.5, 0.5, 1.0]
     item: null
     routine: true
   - name: "Help"
-    icon: "🆘"
+    icon: "[SOS]"
     region: [0.5, 0.5, 1.0, 1.0]
     item: null
     alert: true

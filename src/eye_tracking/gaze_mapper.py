@@ -44,6 +44,7 @@ class GazeMapper:
         self._dwell_start = None
         self._last_triggered_zone = None
         self._last_trigger_time = 0
+        self._awaiting_look_away = False
 
     def update(self, gaze_x, gaze_y, cooldown_seconds=3.0):
         """
@@ -63,6 +64,7 @@ class GazeMapper:
         # if they moved to a different zone, reset the timer
         if active_zone != self._current_zone:
             self._current_zone = active_zone
+            self._awaiting_look_away = False  # looked away, allow triggering again
             self._dwell_start = now if active_zone else None
 
         dwell_progress = 0.0
@@ -73,13 +75,14 @@ class GazeMapper:
             dwell_progress = min(1.0, elapsed / self.dwell_time)
 
             # dwell completed - fire the action
-            if dwell_progress >= 1.0:
+            if dwell_progress >= 1.0 and not self._awaiting_look_away:
                 # cooldown so it doesn't keep firing repeatedly
                 if (self._last_triggered_zone != active_zone or
                         (now - self._last_trigger_time) > cooldown_seconds):
                     triggered = True
                     self._last_triggered_zone = active_zone
                     self._last_trigger_time = now
+                    self._awaiting_look_away = True  # must look away now
 
                 self._dwell_start = now
 
@@ -94,3 +97,4 @@ class GazeMapper:
         self._dwell_start = None
         self._last_triggered_zone = None
         self._last_trigger_time = 0
+        self._awaiting_look_away = False

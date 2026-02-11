@@ -63,3 +63,18 @@ core-deploy/
 
 # drawio backup
 *.bkp
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+*.egg
+
+# MediaPipe model (large binary, download at runtime)
+*.task
+
+# Environment / secrets
+.env
