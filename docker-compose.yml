@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    volumes:
+      - ./src:/app
+      - ./src/config.yaml:/app/config.yaml
+    environment:
+      - MQTT_BROKER=mqtt
+    depends_on:
+      - mqtt
+
+  mqtt:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
