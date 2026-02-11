@@ -46,13 +46,17 @@ class TestAIAssistant(unittest.TestCase):
         
         # mock complete_execution response structure:
         # response.candidates -> parts -> function_call
-        mock_part = MagicMock()
-        mock_part.function_call.name = "toggle"
-        mock_part.function_call.args = {"item_name": "TestItem"}
-        mock_part.text = "AI message"
+        mock_part_fc = MagicMock()
+        mock_part_fc.function_call.name = "toggle"
+        mock_part_fc.function_call.args = {"item_name": "TestItem"}
+        mock_part_fc.text = None # Important: fc part usually has no text
+
+        mock_part_text = MagicMock()
+        mock_part_text.function_call = None
+        mock_part_text.text = "AI message"
         
         mock_candidate = MagicMock()
-        mock_candidate.content.parts = [mock_part]
+        mock_candidate.content.parts = [mock_part_fc, mock_part_text]
         
         mock_response = MagicMock()
         mock_response.candidates = [mock_candidate]
