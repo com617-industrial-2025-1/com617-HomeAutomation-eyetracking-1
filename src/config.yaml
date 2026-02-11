@@ -1,0 +1,49 @@
+camera:
+  index: 0
+
+openhab:
+  base_url: "http://localhost:8080"
+
+velbus:
+  enabled: false
+  serial_port: "/dev/ttyACM0"
+
+mqtt:
+  broker: "localhost"
+  port: 1883
+  topic_prefix: "home/eyetracker"
+
+ai:
+  enabled: true
+  gemini_api_key: "YOUR_KEY_HERE"
+  model: "gemini-2.0-flash"
+
+interaction:
+  dwell_time_seconds: 2.0
+  blink_threshold: 0.2
+  long_blink_seconds: 0.5
+  nod_threshold: 15
+  shake_threshold: 15
+  cooldown_seconds: 3.0
+
+zones:
+  - name: "Light"
+    icon: "💡"
+    region: [0.0, 0.0, 0.5, 0.5]
+    item: "LivingRoom_Light"
+    command: "TOGGLE"
+  - name: "Blinds"
+    icon: "🪟"
+    region: [0.5, 0.0, 1.0, 0.5]
+    item: "Bedroom_Blinds"
+    command: "UP"
+  - name: "Bedtime"
+    icon: "🌙"
+    region: [0.0, 0.5, 0.5, 1.0]
+    item: null
+    routine: true
+  - name: "Help"
+    icon: "🆘"
+    region: [0.5, 0.5, 1.0, 1.0]
+    item: null
+    alert: true
