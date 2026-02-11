@@ -2,15 +2,8 @@
 
 An accessibility-focused home automation controller designed for users with limited motor function. This system uses **eye gaze**, **head movements**, and **blink detection** to control home devices via openHAB, Velbus, and MQTT.
 
-## 🚀 Features
 
-- **Fluid Gaze Tracking**: Optimized MediaPipe iris tracking combined with head pose for intuitive control.
-- **Smart Interaction**: 3-second dwell activation, blink confirmation, and head nod/shake gestures.
-- **AI-Powered Routines**: Integrated Gemini LLM for context-aware routines (e.g., "Bedtime").
-- **Caregiver Dashboard Integration**: MQTT logging of all user actions and emergency alerts.
-- **Cross-Platform**: Runs on Windows, Linux, and Raspberry Pi.
 
----
 
 ## 🛠 Setup & Installation
 
