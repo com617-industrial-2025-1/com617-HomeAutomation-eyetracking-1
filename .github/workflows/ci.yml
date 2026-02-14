@@ -26,9 +26,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r src/requirements.txt
+        pip install -r eyetracking/src/requirements.txt
 
     - name: Run unit tests
       run: |
-        cd src
+        cd eyetracking/src
         python -m unittest discover -s tests -v

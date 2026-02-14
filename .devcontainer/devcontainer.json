@@ -1,8 +1,8 @@
 {
   "name": "Assistive Eye Tracker",
   "build": {
-    "dockerfile": "../Dockerfile",
-    "context": ".."
+    "dockerfile": "../eyetracking/Dockerfile",
+    "context": "../eyetracking"
   },
   "customizations": {
     "vscode": {
