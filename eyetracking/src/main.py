@@ -18,7 +18,7 @@ from interaction.gesture_engine import GestureEngine, InteractionEvent
 from home_automation.openhab_client import OpenHABClient
 from home_automation.velbus_client import VelbusClient
 from home_automation.mqtt_client import MQTTClient
-from ai.assistant import AIAssistant
+# from ai.assistant import AIAssistant
 from ui.overlay import Overlay
 
 # set up logging
@@ -37,40 +37,13 @@ def load_config(path="config.yaml"):
         return yaml.safe_load(f)
 
 
-def handle_zone_trigger(zone, openhab, mqtt, ai_assistant):
+def handle_zone_trigger(zone, openhab, mqtt):
     """called when the user activates a zone by staring at it"""
 
     if zone.alert:
         # help button - send alert to caregiver
         log.info("HELP ALERT triggered!")
         mqtt.publish_alert("Help requested by user")
-        return
-
-    if zone.routine:
-        # routine zone - let the AI decide what to do
-        log.info(f"routine triggered: {zone.name}")
-        result = ai_assistant.handle_routine(zone.name)
-
-        for action in result.get("actions", []):
-            func = action["function"]
-            args = action["args"]
-
-            if func in ("turn_on", "toggle"):
-                openhab.send_command(args["item_name"], "ON")
-            elif func == "turn_off":
-                openhab.send_command(args["item_name"], "OFF")
-            elif func == "set_brightness":
-                openhab.send_command(
-                    args["item_name"], str(args["level"])
-                )
-            elif func == "set_position":
-                openhab.send_command(
-                    args["item_name"], args["position"]
-                )
-
-        log_msg = result.get("log_message", "routine done")
-        mqtt.publish_action(zone.name, log_msg, input_method="gaze")
-        log.info(f"routine result: {log_msg}")
         return
 
     # normal zone - just send the command directly
@@ -114,12 +87,6 @@ def main():
         topic_prefix=mqtt_config.get("topic_prefix", "home/eyetracker"),
     )
 
-    ai_config = config.get("ai", {})
-    ai_assistant = AIAssistant(
-        api_key=ai_config.get("gemini_api_key"),
-        model=ai_config.get("model", "gemini-2.0-flash"),
-    )
-
     overlay = Overlay()
 
     # start connections
@@ -160,7 +127,7 @@ def main():
             if gaze_result["triggered"]:
                 triggered_zone = gaze_result["zone"]
                 handle_zone_trigger(
-                    triggered_zone, openhab, mqtt, ai_assistant
+                    triggered_zone, openhab, mqtt
                 )
 
             # handle blink confirmation on active zone
@@ -168,7 +135,7 @@ def main():
                     gaze_result["zone"] is not None):
                 triggered_zone = gaze_result["zone"]
                 handle_zone_trigger(
-                    triggered_zone, openhab, mqtt, ai_assistant
+                    triggered_zone, openhab, mqtt
                 )
 
             # draw the UI

@@ -4,5 +4,4 @@ numpy
 requests
 pyyaml
 python-velbus
-google-genai
 paho-mqtt
