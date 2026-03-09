@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eye Tracking - Light Control</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fff;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #status {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      border-radius: 8px;
+      background: #f0f0f0;
+      font-size: 16px;
+      z-index: 100;
+      text-align: center;
+      max-width: 90%;
+    }
+    #right-zone {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 30%;
+      height: 100%;
+      border-left: 2px dashed #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    #right-zone.active { background: rgba(0, 150, 255, 0.1); }
+    #right-zone.triggered { background: rgba(0, 200, 0, 0.15); }
+    #right-zone .iconify { color: #aaa; font-size: 80px; }
+    #progress-bar {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 0%;
+      height: 6px;
+      background: #007bff;
+      transition: width 0.1s linear;
+    }
+    #gaze-dot {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      background: rgba(255, 0, 0, 0.6);
+      border: 3px solid red;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+      left: -100px;
+      top: -100px;
+      transition: left 0.08s linear, top 0.08s linear;
+    }
+  </style>
+</head>
+<body>
+  <div id="status">Loading WebGazer...</div>
+  <div id="right-zone"><span class="iconify" data-icon="mdi:lightbulb-outline" data-width="80" data-height="80"></span></div>
+  <div id="progress-bar"></div>
+  <div id="gaze-dot"></div>
+
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script src="webgazer.js"></script>
+  <script>
+    const DWELL_TIME = 3000;
+    const RIGHT_ZONE_THRESHOLD = 0.7;
+    const COOLDOWN = 3000;
+
+    let gazeStartTime = null;
+    let lastTriggerTime = 0;
+    let coolingDown = false;
+
+    const statusEl = document.getElementById('status');
+    const rightZone = document.getElementById('right-zone');
+    const progressBar = document.getElementById('progress-bar');
+    const gazeDot = document.getElementById('gaze-dot');
+
+    statusEl.textContent = 'WebGazer loaded. Requesting camera...';
+
+    function sendLightSignal() {
+      statusEl.textContent = 'Signal sent to lights!';
+      statusEl.style.background = '#d4edda';
+      rightZone.classList.remove('active');
+      rightZone.classList.add('triggered');
+
+      fetch('http://172.20.10.2:1880/lights/1?t=' + Date.now(), {
+        method: 'GET',
+        cache: 'no-store'
+      })
+      .then(function(res) {
+        console.log('Light signal sent, status:', res.status);
+      })
+      .catch(function(err) {
+        console.error('Failed to send signal:', err);
+        statusEl.textContent = 'Signal failed - is Node-RED running?';
+        statusEl.style.background = '#f8d7da';
+      });
+
+      setTimeout(function() {
+        rightZone.classList.remove('triggered');
+        statusEl.textContent = 'Tracking active - look right to toggle lights';
+        statusEl.style.background = '#f0f0f0';
+      }, COOLDOWN);
+    }
+
+    // First request camera explicitly, then pass the stream to WebGazer
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        statusEl.textContent = 'Camera granted! Starting eye tracking...';
+        statusEl.style.background = '#d4edda';
+        console.log('Camera stream obtained:', stream.getVideoTracks()[0].label);
+
+        webgazer.params.showVideoPreview = true;
+        webgazer.params.showFaceOverlay = true;
+        webgazer.params.showFaceFeedbackBox = true;
+
+        webgazer
+          .setRegression('ridge')
+          .setGazeListener(function(data, timestamp) {
+            if (!data) {
+              statusEl.textContent = 'Detecting face... Click around the page while looking at your cursor.';
+              statusEl.style.background = '#fff3cd';
+              return;
+            }
+
+            gazeDot.style.left = data.x + 'px';
+            gazeDot.style.top = data.y + 'px';
+
+            statusEl.textContent = 'Gaze: (' + Math.round(data.x) + ', ' + Math.round(data.y) + ')';
+            statusEl.style.background = '#d4edda';
+
+            var screenWidth = window.innerWidth;
+            var isLookingRight = data.x > screenWidth * RIGHT_ZONE_THRESHOLD;
+            var now = Date.now();
+
+            if (coolingDown) return;
+
+            if (isLookingRight) {
+              if (!gazeStartTime) gazeStartTime = now;
+              var elapsed = now - gazeStartTime;
+              var progress = Math.min(elapsed / DWELL_TIME, 1);
+              progressBar.style.width = (progress * 30) + '%';
+              rightZone.classList.add('active');
+
+              if (elapsed >= DWELL_TIME) {
+                gazeStartTime = null;
+                progressBar.style.width = '0%';
+                coolingDown = true;
+                sendLightSignal();
+                setTimeout(function() {
+                  coolingDown = false;
+                  gazeStartTime = null;
+                }, COOLDOWN);
+              }
+            } else {
+              gazeStartTime = null;
+              progressBar.style.width = '0%';
+              rightZone.classList.remove('active');
+            }
+          })
+          .begin()
+          .then(function() {
+            statusEl.textContent = 'Tracking started! Click around while looking at your cursor to calibrate.';
+            statusEl.style.background = '#d4edda';
+            console.log('WebGazer started successfully');
+          })
+          .catch(function(err) {
+            statusEl.textContent = 'WebGazer error: ' + err.message;
+            statusEl.style.background = '#f8d7da';
+            console.error('WebGazer error:', err);
+          });
+      })
+      .catch(function(err) {
+        statusEl.textContent = 'Camera denied or unavailable: ' + err.message;
+        statusEl.style.background = '#f8d7da';
+        console.error('Camera error:', err);
+      });
+  </script>
+</body>
+</html>
