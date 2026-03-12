@@ -12,3 +12,6 @@ The set up:
 A camera looking at a slide show on an Amazon Echo.
 I'm reasonably impressed by the richness of the responses and could be something that, if packaged, could help the DIY SOS family. 
 The python program would need tweaking to send the text to a suitable device that is able to display the vision readout.
+
+
+See [VLM_examples.pdf](../workup/VLM_examples.pdf)
