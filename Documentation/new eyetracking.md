@@ -12,3 +12,7 @@ The eyetracking is handled using webgazer.js, an open-source, javascript-based, 
 * While the eye-tracking is good enough for someone to activate a lightbulb, it is not fully accurate, and we found during testing that it is less accurate with people who wear glasses to the point of unusability.
 * Currently the front-end only has one panel, one that activates a light-bulb. We plan to implement more zones based on feedback.
 * As of now, the eyetracking front-end runs on a seperate computer, and is yet to be tested on the raspberry pi.
+
+## References
+
+WEBAIM, 2012. WebAIM: Motor Disabilities - Types of Motor Disabilities Available from: https://webaim.org/articles/motor/motordisabilities
