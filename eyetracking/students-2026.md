@@ -2,7 +2,7 @@
 
 | name                    | student id         | github user id |
 |:------------------------|:-------------------|:---------------|
-| ilyass athmani          | 16966098           |athmani01       |
+| Leonard Bauer          | Q103099644          |lnrdbr / leonardbauer      |
 |                         |                    |                |
 |                         |                    |                |
 |                         |                    |                |
