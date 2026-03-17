@@ -17,3 +17,17 @@ The python program would need tweaking to send the text to a suitable device tha
 
 
 See [VLM_examples.pdf](../workup/VLM_examples.pdf)
+
+## installation
+
+https://github.com/hailo-ai/hailo-apps/blob/51c9e4cc74578b5306ff8199a21884bf3c63aad5/doc/user_guide/installation.md#app-groups 
+This is a step by step guide but should be used with care as it may depend on the version of the Kernel and OS running on the pi5. 
+
+GIT HUB for this project
+
+https://www.raspberrypi.com/documentation/computers/ai.html
+
+This is a 'safe' link and will stay updated in due course. 
+
+
+
