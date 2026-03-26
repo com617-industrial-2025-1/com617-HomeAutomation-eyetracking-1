@@ -1,72 +1,46 @@
-# Assistive Eye & Head Tracking Home Automation
+# Node-RED Velbus Control
+---
 
-An accessibility-focused home automation controller designed for users with limited motor function. This system uses **eye gaze**, **head movements**, and **blink detection** to control home devices via openHAB, Velbus, and MQTT.
+## Prerequisites
 
-
-
-
-## 🛠 Setup & Installation
-
-### Option 1: Local Environment (Recommended for GUI)
-
-1. **Python 3.12+** is required.
-2. **Setup Virtual Environment**:
-   ```bash
-   python -m venv venv
-   .\venv\Scripts\activate  # Windows
-   source venv/bin/activate  # Linux/Mac
-   ```
-3. **Install Dependencies**:
-   ```bash
-   pip install -r src/requirements.txt
-   ```
-4. **Configure**:
-   Edit `src/config.yaml` with your openHAB URL and Gemini API Key.
-5. **Run**:
-   ```bash
-   python src/main.py
-   ```
-
-### Option 2: Docker (Best for Headless / Testing)
-
-1. **Run Tests**:
-   ```bash
-   docker build -t eyetracker .
-   docker run eyetracker
-   ```
-2. **Run Stack (App + MQTT)**:
-   ```bash
-   docker-compose up -d
-   ```
-
-### Option 3: VS Code Dev Containers
-Open the project folder in VS Code and click **"Reopen in Container"**. All dependencies, including system libraries for MediaPipe, will be pre-installed.
+* [Node-RED](https://nodered.org/)
+* [velserv](https://github.com/jeroends/velserv)
+* Raspberry Pi
 
 ---
 
-## 📖 How to Use
+## Installation & Setup
+### 1. Install Node-RED onto the Raspberry Pi
+To run Node-RED on the Raspberry Pi follow [this](https://nodered.org/docs/getting-started/raspberrypi) offical guide.
+### 2. Install Node-RED Velbus Plugin
+To interact with the Velbus protocol, you need the dedicated palette nodes:
 
-- **Gaze**: Stare at a zone (e.g., "Light") for 3 seconds to trigger.
-- **Confirm**: Long blink (0.5s) or a small head nod.
-- **Cancel**: Eye blink or a head shake.
-- **AI Routines**: Looking at "🌙 Bedtime" triggers a context-aware sequence of commands.
+1. Open your Node-RED editor (usually `http://localhost:1880`).
+2. Click the **Menu** (top right) > **Manage palette**.
+3. Go to the **Install** tab and search for:
+   `node-red-contrib-velbus`
+4. Click **Install**.
 
+### 2. Configure the USB-to-TCP Bridge
+Node-RED communicates with the Velbus hardware via a socket. Since the hardware uses USB serial, you must use a TCP server to bridge the communication.
+
+**Recommendation:** [velserv](https://github.com/jeroends/velserv) by jeroends
+
+**Setup:** Follow the instructions on the velserv GitHub to compile and run it on your host machine.
+
+## 3. Implementation
+
+### Option A: Import an Existing Flow
+If you are using a pre-made flow from this repository:
+1. Copy the JSON content from the `flows.json` file.
+2. In Node-RED, go to **Menu** > **Import**.
+3. Paste the JSON and click **Import to workspace**.
+
+### Option B: Create Your Own Flow
+To control a relay by **Send Raw Bytes** node:
+* **Select Velbus Port:** Configure a **TCP Request** node with the IP and Port (default `127.0.0.1:6000`) of your `velserv` host.
+* **Select Relay Address:** In a **Function** node through msg or directly in the **Send Raw Bytes** node, define the destination address of your relay module.
+* **Define Data Bytes:** Send a Buffer containing the raw Velbus hex string, create your own string or choose one form the dropdown.
+  
+  * For more advanced setups, specialized nodes for **Dimmers**, **Temperature** or **Buttons** can be used insead of the **Send Raw Bytes** node.
 ---
-
-## 🧪 Testing
-Run the automated test suite (47 tests):
-```bash
-cd src
-python -m unittest discover -s tests -v
-```
-
-## 🏗 Architecture
-- **MediaPipe**: For high-fidelity face and iris tracking.
-- **openHAB**: The core home automation server.
-- **Google Gemini**: Background reasoning for smart routines.
-- **Paho-MQTT**: Communication with external monitoring tools.
-
----
-
-## 📄 License
-This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
