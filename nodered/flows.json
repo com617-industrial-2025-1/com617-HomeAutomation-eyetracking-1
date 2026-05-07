@@ -1,0 +1,739 @@
+[
+    {
+        "id": "9e8c3604887511aa",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "754ce351fee5fa1e",
+        "type": "http response",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 940,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "9f3ef1f321dee944",
+        "type": "inject",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 440,
+        "wires": [
+            [
+                "4cd27c486cfc1ecb"
+            ]
+        ]
+    },
+    {
+        "id": "2fdc4eb9f03d49c7",
+        "type": "velbus-send-raw-bytes",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "connector": "7e225e42c08e66d1",
+        "commandName": "switch relay on ",
+        "dataBytes": "0x0F",
+        "dataBytesType": "2",
+        "address": "",
+        "addressType": "7",
+        "priority": 248,
+        "rtr": "0",
+        "x": 930,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "bfd814139535ac5c",
+        "type": "velbus-send-raw-bytes",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "connector": "7e225e42c08e66d1",
+        "commandName": "switch relay off ",
+        "dataBytes": "0x0F",
+        "dataBytesType": "1",
+        "address": "",
+        "addressType": "7",
+        "priority": 248,
+        "rtr": "0",
+        "x": 930,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "a0ab7f51c6c17649",
+        "type": "http in",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "url": "lights/1",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": true,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 400,
+        "wires": [
+            [
+                "4cd27c486cfc1ecb"
+            ]
+        ]
+    },
+    {
+        "id": "efcc86b35e88dc84",
+        "type": "velbus-send-raw-bytes",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "connector": "7e225e42c08e66d1",
+        "commandName": "switch status ",
+        "dataBytes": "0x0F",
+        "dataBytesType": "0",
+        "address": "",
+        "addressType": "7",
+        "priority": 248,
+        "rtr": "0",
+        "x": 920,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "4cd27c486cfc1ecb",
+        "type": "velbus-relay",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "connector": "7e225e42c08e66d1",
+        "commands": 0,
+        "commandsType": "TOGGLE",
+        "address": 1,
+        "addressType": "7",
+        "channel": "1",
+        "x": 520,
+        "y": 420,
+        "wires": [
+            [
+                "b81af0dc43ec0e28"
+            ]
+        ]
+    },
+    {
+        "id": "b81af0dc43ec0e28",
+        "type": "function",
+        "z": "9e8c3604887511aa",
+        "name": "function 1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 420,
+        "wires": [
+            [
+                "754ce351fee5fa1e"
+            ]
+        ]
+    },
+    {
+        "id": "076a4580eb48da51",
+        "type": "http response",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 940,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "e04a6953cec01e36",
+        "type": "inject",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 540,
+        "wires": [
+            [
+                "2d1abeb185f4ecb0"
+            ]
+        ]
+    },
+    {
+        "id": "efb943536b0b3809",
+        "type": "http in",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "url": "lights/2",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": true,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 500,
+        "wires": [
+            [
+                "2d1abeb185f4ecb0"
+            ]
+        ]
+    },
+    {
+        "id": "2d1abeb185f4ecb0",
+        "type": "velbus-relay",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "connector": "7e225e42c08e66d1",
+        "commands": 0,
+        "commandsType": "TOGGLE",
+        "address": 1,
+        "addressType": "7",
+        "channel": "2",
+        "x": 520,
+        "y": 520,
+        "wires": [
+            [
+                "b780790e5a4dfda2"
+            ]
+        ]
+    },
+    {
+        "id": "b780790e5a4dfda2",
+        "type": "function",
+        "z": "9e8c3604887511aa",
+        "name": "function 4",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 520,
+        "wires": [
+            [
+                "076a4580eb48da51"
+            ]
+        ]
+    },
+    {
+        "id": "780707b0a3545f31",
+        "type": "http response",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 940,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "253d8f9dd4577029",
+        "type": "inject",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 640,
+        "wires": [
+            [
+                "97505a8a386774b4"
+            ]
+        ]
+    },
+    {
+        "id": "94b8c9dfa2330572",
+        "type": "http in",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "url": "lights/3",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": true,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 600,
+        "wires": [
+            [
+                "97505a8a386774b4"
+            ]
+        ]
+    },
+    {
+        "id": "97505a8a386774b4",
+        "type": "velbus-relay",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "connector": "7e225e42c08e66d1",
+        "commands": 0,
+        "commandsType": "TOGGLE",
+        "address": 1,
+        "addressType": "7",
+        "channel": "3",
+        "x": 520,
+        "y": 620,
+        "wires": [
+            [
+                "c7a8b0f3d3300c20"
+            ]
+        ]
+    },
+    {
+        "id": "c7a8b0f3d3300c20",
+        "type": "function",
+        "z": "9e8c3604887511aa",
+        "name": "function 6",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 620,
+        "wires": [
+            [
+                "780707b0a3545f31"
+            ]
+        ]
+    },
+    {
+        "id": "232addea5911affe",
+        "type": "http response",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 940,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "9c8e700525a5c603",
+        "type": "inject",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 740,
+        "wires": [
+            [
+                "fc62840b91aad704"
+            ]
+        ]
+    },
+    {
+        "id": "78dc5a02f3c9efc4",
+        "type": "http in",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "url": "lights/4",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": true,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 700,
+        "wires": [
+            [
+                "fc62840b91aad704"
+            ]
+        ]
+    },
+    {
+        "id": "fc62840b91aad704",
+        "type": "velbus-relay",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "connector": "7e225e42c08e66d1",
+        "commands": 0,
+        "commandsType": "TOGGLE",
+        "address": 1,
+        "addressType": "7",
+        "channel": "4",
+        "x": 520,
+        "y": 720,
+        "wires": [
+            [
+                "a8082c6166cda08c"
+            ]
+        ]
+    },
+    {
+        "id": "a8082c6166cda08c",
+        "type": "function",
+        "z": "9e8c3604887511aa",
+        "name": "function 8",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 720,
+        "wires": [
+            [
+                "232addea5911affe"
+            ]
+        ]
+    },
+    {
+        "id": "d0fe8272bc60e976",
+        "type": "http response",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 940,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "12387051227b9c96",
+        "type": "function",
+        "z": "9e8c3604887511aa",
+        "name": "function 9",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 820,
+        "wires": [
+            [
+                "fc62840b91aad704",
+                "97505a8a386774b4",
+                "2d1abeb185f4ecb0",
+                "4cd27c486cfc1ecb",
+                "d0fe8272bc60e976"
+            ]
+        ]
+    },
+    {
+        "id": "040558876c502d6d",
+        "type": "inject",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 840,
+        "wires": [
+            [
+                "12387051227b9c96"
+            ]
+        ]
+    },
+    {
+        "id": "7a59173fc2114f0b",
+        "type": "http in",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "url": "lights/0",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": true,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 800,
+        "wires": [
+            [
+                "12387051227b9c96"
+            ]
+        ]
+    },
+    {
+        "id": "bf3fe04e9fa09d48",
+        "type": "velbus-dimmer",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "connector": "7e225e42c08e66d1",
+        "commands": "0",
+        "commandsType": "VALUE",
+        "address": 1,
+        "addressType": "2",
+        "channel": 1,
+        "x": 520,
+        "y": 920,
+        "wires": [
+            [
+                "91085a2d74caa444"
+            ]
+        ]
+    },
+    {
+        "id": "ae23f8a6c56a9135",
+        "type": "inject",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 940,
+        "wires": [
+            [
+                "bf3fe04e9fa09d48"
+            ]
+        ]
+    },
+    {
+        "id": "8580c1c297abee89",
+        "type": "http in",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "url": "lights/led/0",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 900,
+        "wires": [
+            [
+                "bf3fe04e9fa09d48"
+            ]
+        ]
+    },
+    {
+        "id": "df0433862d408d01",
+        "type": "http response",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 940,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "91085a2d74caa444",
+        "type": "function",
+        "z": "9e8c3604887511aa",
+        "name": "function 2",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 920,
+        "wires": [
+            [
+                "df0433862d408d01"
+            ]
+        ]
+    },
+    {
+        "id": "5706037ad86f5ee1",
+        "type": "velbus-dimmer",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "connector": "7e225e42c08e66d1",
+        "commands": "100",
+        "commandsType": "VALUE",
+        "address": 1,
+        "addressType": "2",
+        "channel": 1,
+        "x": 520,
+        "y": 1020,
+        "wires": [
+            [
+                "fcf2a0d30f4a3092"
+            ]
+        ]
+    },
+    {
+        "id": "4d7ef6d499aa2d33",
+        "type": "inject",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 1040,
+        "wires": [
+            [
+                "5706037ad86f5ee1"
+            ]
+        ]
+    },
+    {
+        "id": "cb8c3b62afdc2c75",
+        "type": "http in",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "url": "lights/led/1",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 1000,
+        "wires": [
+            [
+                "5706037ad86f5ee1"
+            ]
+        ]
+    },
+    {
+        "id": "8b99177f55baae5a",
+        "type": "http response",
+        "z": "9e8c3604887511aa",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 940,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "fcf2a0d30f4a3092",
+        "type": "function",
+        "z": "9e8c3604887511aa",
+        "name": "function 3",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 1020,
+        "wires": [
+            [
+                "8b99177f55baae5a"
+            ]
+        ]
+    },
+    {
+        "id": "7e225e42c08e66d1",
+        "type": "velbus-connector",
+        "ip": "raspberrypi.local",
+        "port": 6000
+    },
+    {
+        "id": "efae04c2cde657b8",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-velbus": "0.2.10"
+        }
+    }
+]
