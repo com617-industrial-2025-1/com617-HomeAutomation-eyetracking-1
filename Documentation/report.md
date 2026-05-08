@@ -48,6 +48,8 @@ The main deliverable of the project was the MVP itself, which consists of a Velb
 
 ## Project Milestones and Management
 
+The project used combination of Agile software development (Usage of Sprints instead of a waterfall style model, weekly scrums during classroom times) and usage of a kanban to manage tasks that needed to be completed, as well as assigning those tasks to group members. The three primary milestones were the presentations at the end of each sprint. The Presentation at the end of the first sprint was done in an informal fashion, while the presentation with the client that was supposed to happen at the end of the second sprint did not end up happening. 
+
 ## Implementation
 
 The first version of the eyetracking software was written in python, and connected to the Velbus system using OpenHab, a free-and-open-source home automation system. However, this solution worked inconsistently and after the team member who wrote it left the rest of the team were struggling to fix it. Additionally, this early implementation had features that were not necessary for an MVP, such as google gemini integration. It was decided it would be easier to start from scratch with an implementation the team was familiar with and several various options were explored, including various home automation systems such as Home Assistant, and node-red, a low-code platform based on NodeJS to handle outputs from the eye-tracking software. 
