@@ -70,6 +70,14 @@ Additional zones could be added for additional functionality. Some ideas for add
 
 ## References
 
+Reference listCORNO, F., L. FARINETTI and I. SIGNORILE, 2002. A cost-effective solution for eye-gaze assistive technologyGALANTE, A. and P. MENEZES, 2012. A Gaze-Based Interaction System for People with Cerebral Palsy. Procedia Technology, 5, 895–902MARKO PERIŠA et al., 2025. Empowering People with Disabilities in Smart Homes Using Predictive Informing. Sensors, 25(1), 284–284
+
+SPORT ENGLAND, 2016. A statistical review of disabled people in England. Understanding disabled people - demographics Understanding disabled people - impairments Available from: https://sportengland-production-files.s3.eu-west-2.amazonaws.com/s3fs-public/mapping-disability-the-facts.pdf
+
+WEBAIM, 2012a. WebAIM: Motor Disabilities - Types of Motor Disabilities Available from: https://webaim.org/articles/motor/motordisabilities
+
+WEBAIM, 2012b. WebAIM: Motor Disabilities - Assistive Technologies Available from: https://webaim.org/articles/motor/assistive
+
 ## Appendices
 
 No AI has been used in the writing of this report. 
